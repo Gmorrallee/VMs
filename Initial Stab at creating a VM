@@ -16,7 +16,10 @@ param VMIPAddress string
 param VMvNet string
 
 @allowed([
+  'DirectoryServices'
+  'FileServices'
   'Management'
+  'DatabaseServices'
 ])
 param VMSubnet string
 
@@ -39,7 +42,7 @@ param FunctionTag string
 
 // Get the ID of the subnet in the required vNet
 
-resource AZ01vNet 'Microsoft.Network/virtualNetworks/subnets@2021-05-01' existing = {
+resource SubnetID 'Microsoft.Network/virtualNetworks/subnets@2021-05-01' existing = {
   name: '${VMvNet}/${VMSubnet}'
   scope: resourceGroup('TM-RG-Networking')
 }
@@ -57,7 +60,7 @@ resource NewNic 'Microsoft.Network/networkInterfaces@2021-05-01' = {
           privateIPAllocationMethod: 'Static'
           privateIPAddress: VMIPAddress
           subnet:{
-            id: AZ01vNet.id
+            id: SubnetID.id
           }
         }
       }
