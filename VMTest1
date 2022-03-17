@@ -4,12 +4,13 @@
 @maxLength(12)
 param VMName string
 
-param AdminUser string = 'CentralityAdmin'
+param AdminUser string
 @secure()
 param AdminPW string
 
 param VMLocation string = resourceGroup().location
 param VMIPAddress string
+param VMInstanceSize string
 
 // Get the location of the Resource Group to determine vNet for deployment
 
@@ -26,6 +27,7 @@ param VMSubnet string
 @allowed([
   '2016-Datacenter'
   '2019-Datacenter'
+  '2022-datacenter-azure-edition'
 ])
 param OSVersion string
 
@@ -34,17 +36,18 @@ param OSVersion string
   '256'
   '512'
   '1024'
+  '2048'
+  '4096'
+  '8192'
 ])
-@description('Enter: 128, 256, 512 or 1024')
 param DataDiskSize string
 
 @allowed([
-  'Standard'
-  'Premium'
+  'Standard_LRS'
+  'Premium_LRS'
+  'StandardSSD_LRS'
 ])
-param DiskType string
-
-var DiskSku = (DiskType == 'Premium') ? 'Premium_LRS' : 'Standard_LRS'
+param DiskSku string
 
 param CostCentreTag string
 param FunctionTag string
@@ -89,7 +92,7 @@ resource NewVM 'Microsoft.Compute/virtualMachines@2021-11-01' = {
   }
   properties: {
     hardwareProfile: {
-      vmSize: 'Standard_B2s'
+      vmSize: VMInstanceSize
     }
     osProfile:{
       computerName: VMName
