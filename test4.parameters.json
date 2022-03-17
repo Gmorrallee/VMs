@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "VMName": {
+        "value": "TMLAZ019511"
+      },
+      "VMInstanceSize": {
+        "value": "Standard_B2s"
+      },
+      "AdminUser": {
+        "value": "CentralityAdmin"
+      },
+      "VMSubnet":{
+        "value": "Management"
+    },
+      "VMIPAddress":{
+          "value": "10.10.50.11"
+      },
+    "OSVersion": {
+      "value": "2019-Datacenter"
+    },
+"DataDiskSize": {
+  "value": "128"
+},
+"DiskSKU": {
+    "value": "Premium_LRS"
+  },
+  "CostCentreTag": {
+    "value": "Group"
+  },
+  "FunctionTag": {
+    "value": "Test VM"
+  }
+  }
+}
